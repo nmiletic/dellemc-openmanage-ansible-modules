@@ -490,7 +490,13 @@ def main():
                         module.exit_json(msg=storage_status.get('Message', ""),
                                          changed=changed, storage_status=storage_status)
                 elif storage_status.get("Status") == "Failed":
-                    module.fail_json(msg=storage_status.get("Message"))
+                    if storage_status.get("Message", "") == "No changes found to commit!" \
+                            or storage_status.get("Message", "") == "Unable to find the virtual disk":
+                        changed = False
+                        module.exit_json(msg=storage_status.get('Message', ""),
+                                         changed=changed, storage_status=storage_status)
+                    else:
+                        module.fail_json(msg=storage_status.get("Message"))
                 else:
                     module.fail_json(msg="Failed to perform storage operation")
     except (ImportError, ValueError, RuntimeError, TypeError) as e:
