@@ -485,13 +485,13 @@ def main():
                 if storage_status.get("Status", "") == "Success":
                     changed = True
                     if storage_status.get("Message", "") == "No changes found to commit!" \
-                            or storage_status.get("Message", "") == "Unable to find the virtual disk":
+                            or storage_status.get("Message", "") == "Unable to find the virtual disk.":
                         changed = False
                         module.exit_json(msg=storage_status.get('Message', ""),
                                          changed=changed, storage_status=storage_status)
                 elif storage_status.get("Status") == "Failed":
                     if storage_status.get("Message", "") == "No changes found to commit!" \
-                            or storage_status.get("Message", "") == "Unable to find the virtual disk":
+                            or storage_status.get("Message", "") == "Unable to find the virtual disk.":
                         changed = False
                         module.exit_json(msg=storage_status.get('Message', ""),
                                          changed=changed, storage_status=storage_status)
